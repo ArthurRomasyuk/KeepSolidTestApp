@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">KeepSolidApp</string>
+    <string name="clean_button">Очистить</string>
+    <string name="send_button">Отправить</string>
+    <string name="accept_button">Подтвердить</string>
+    <string name="reject_button">Отклонить</string>
+    <string name="hint_etEmail">Введите email адррес</string>
+    <string name="error_message"></string>
 </resources>

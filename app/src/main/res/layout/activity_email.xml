@@ -1,43 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_main"
+    android:id="@+id/activity_email"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.arutr.keepsolidapp.MainActivity">
-    <EditText
-        android:id="@+id/etEmail"
+    tools:context="com.example.arutr.keepsolidapp.EmailActivity">
+    <TextView
+        android:id="@+id/tvEmail"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textEmailAddress"
-        android:hint="@string/hint_etEmail"/>
+        android:layout_height="wrap_content" />
 
     <Button
-        android:id="@+id/clean"
+        android:id="@+id/reject"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:layout_below="@+id/etEmail"
         android:layout_alignParentEnd="true"
-        android:text="@string/clean_button"/>
+        android:text="@string/reject_button"/>
 
     <Button
-        android:id="@+id/send"
+        android:id="@+id/accept"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:layout_below="@+id/etEmail"
         android:layout_alignParentStart="true"
-        android:text="@string/send_button"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/errorMessage"
-        android:layout_below="@+id/etEmail"
-        android:layout_alignParentStart="true" />
+        android:text="@string/accept_button"/>
 </RelativeLayout>
