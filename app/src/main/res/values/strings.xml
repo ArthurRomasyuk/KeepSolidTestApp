@@ -6,4 +6,5 @@
     <string name="reject_button">Отклонить</string>
     <string name="hint_etEmail">Введите email адррес</string>
     <string name="error_message"></string>
+    <string name="check_box_name">Разрешить</string>
 </resources>
