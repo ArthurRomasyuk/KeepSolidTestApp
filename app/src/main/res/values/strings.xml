@@ -7,4 +7,7 @@
     <string name="hint_etEmail">Введите email адррес</string>
     <string name="error_message"></string>
     <string name="check_box_name">Разрешить</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

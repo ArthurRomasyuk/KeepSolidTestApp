@@ -3,67 +3,38 @@ package com.example.arutr.keepsolidapp;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.TextUtils;
-import android.view.View;
-import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
+import com.example.arutr.keepsolidapp.fragment.EmailInputFragment;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-
-public class MainActivity extends AppCompatActivity {
-    @BindView(R.id.etEmail)
-    EditText etEmail;
-
-    @BindView(R.id.clean)
-    Button cleanButton;
-
-    @BindView(R.id.send)
-    Button sendButton;
-
-    @BindView(R.id.errorMessage)
-    TextView errorMessage;
-
-    @BindView(R.id.cbAllow)
-    CheckBox cbAllow;
-
+public class MainActivity extends AppCompatActivity implements EmailInputFragment.OnClickSendButtonListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
-        sendButton.setClickable(false);
-    }
 
-    @OnClick (R.id.send)
-    public void send (View view){
-        if (TextUtils.isEmpty(etEmail.getText())){
-            errorMessage.setText("Поле email не может быть пустым");
-        } else if (!etEmail.getText().toString().contains("@")){
-            errorMessage.setText("Введите правильный email");
-        } else {
-            Intent emailIntent = new Intent(this, EmailActivity.class);
-            emailIntent.putExtra("email", etEmail.getText().toString());
-            startActivityForResult(emailIntent,1);
-        }
-    }
-    @OnClick(R.id.clean)
-    public void clean (){
-        etEmail.setText("");
-    }
+        // Check that the activity is using the layout version with
+        // the fragment_container FrameLayout
+        if (findViewById(R.id.fragment_container) != null) {
 
-    @OnClick(R.id.cbAllow)
-    public void allow (){
-        if (!cbAllow.isChecked()){
-            sendButton.setClickable(false);
-        } else {
-            sendButton.setClickable(true);
+            // However, if we're being restored from a previous state,
+            // then we don't need to do anything and should return or else
+            // we could end up with overlapping fragments.
+            if (savedInstanceState != null) {
+                return;
+            }
+
+            // Create a new Fragment to be placed in the activity layout
+            EmailInputFragment emailInputFragment = new EmailInputFragment();
+
+            // In case this activity was started with special instructions from an
+            // Intent, pass the Intent's extras to the fragment as arguments
+            // Add the fragment to the 'fragment_container' FrameLayout
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.fragment_container, emailInputFragment).commit();
+
         }
+
     }
 
 
@@ -72,8 +43,14 @@ public class MainActivity extends AppCompatActivity {
         if (data.getBooleanExtra("reject", true)){
             Toast.makeText(MainActivity.this, "Пользователь не подтвердил адрес.", Toast.LENGTH_SHORT).show();
         } else {
-            clean();
             Toast.makeText(MainActivity.this, "Пользователь подтвердил адрес.", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    public void openEmailActivity(String email) {
+        Intent emailIntent = new Intent(this, EmailActivity.class);
+        emailIntent.putExtra("email", email);
+        startActivityForResult(emailIntent,1);
     }
 }
