@@ -1,9 +1,7 @@
 package com.example.arutr.keepsolidapp.fragment;
 
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -16,7 +14,6 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.example.arutr.keepsolidapp.EmailActivity;
 import com.example.arutr.keepsolidapp.R;
 
 import butterknife.BindView;
@@ -46,21 +43,14 @@ public class EmailInputFragment extends Fragment {
     CheckBox cbAllow;
 
     public EmailInputFragment() {
-        // Required empty public constructor
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_email_input, container, false);
         ButterKnife.bind(this, view);
-        sendButton.setClickable(false);
+        allow();
         return view;
     }
 
@@ -75,25 +65,25 @@ public class EmailInputFragment extends Fragment {
         }
     }
 
-
     @OnClick(R.id.send)
-    public void send (View view){
-        if (TextUtils.isEmpty(etEmail.getText())){
-            errorMessage.setText("Поле email не может быть пустым");
-        } else if (!etEmail.getText().toString().contains("@")){
-            errorMessage.setText("Введите правильный email");
+    public void send(View view) {
+        if (TextUtils.isEmpty(etEmail.getText())) {
+            errorMessage.setText(R.string.field_is_empy);
+        } else if (!etEmail.getText().toString().contains("@")) {
+            errorMessage.setText(R.string.wrong_email);
         } else {
             mCallback.openEmailActivity(etEmail.getText().toString());
         }
     }
+
     @OnClick(R.id.clean)
-    public void clean (){
+    public void clean() {
         etEmail.setText("");
     }
 
     @OnClick(R.id.cbAllow)
-    public void allow (){
-        if (!cbAllow.isChecked()){
+    public void allow() {
+        if (!cbAllow.isChecked()) {
             sendButton.setClickable(false);
         } else {
             sendButton.setClickable(true);
@@ -101,7 +91,28 @@ public class EmailInputFragment extends Fragment {
     }
 
     public interface OnClickSendButtonListener {
-        public void openEmailActivity(String email);
+        void openEmailActivity(String email);
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        cbAllow.setChecked(false);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        boolean clean = false;
+        try {
+            clean = getArguments().getBoolean("clean");
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+            clean=false;
+        }
+        if (clean) {
+            clean();
+            getArguments().clear();
+        }
+    }
 }

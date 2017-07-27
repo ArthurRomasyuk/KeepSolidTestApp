@@ -1,0 +1,32 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.arutr.keepsolidapp.fragment.RejectFragment">
+
+    <ImageView
+        android:id="@+id/reject_icon"
+        android:layout_width="46dp"
+        android:layout_height="45dp"
+        android:src="@mipmap/close_circle_outline"
+        android:layout_marginTop="@dimen/marginTop"/>
+
+    <TextView
+        android:layout_marginTop="@dimen/marginTopText"
+        android:id="@+id/reject_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/reject_text"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        android:layout_toEndOf="@id/reject_icon"/>
+
+    <Button
+        android:id="@+id/reject_ok_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/ok"
+        android:layout_below="@+id/reject_text"
+        android:layout_centerHorizontal="true" />
+
+</RelativeLayout>
