@@ -68,6 +68,7 @@ public class MainActivity extends AppCompatActivity implements EmailInputFragmen
         }
     }
 
+
     @Override
     public void openEmailActivity(String email) {
         Intent emailIntent = new Intent(this, EmailActivity.class);
