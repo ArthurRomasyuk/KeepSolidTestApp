@@ -85,7 +85,6 @@ public class MainActivity extends AppCompatActivity implements UserFragment.OnUs
     protected void onRestart() {
         super.onRestart();
         userFragment = new UserFragment();
-        supportFragmentManager = getSupportFragmentManager();
     }
 
     @Override
@@ -98,7 +97,6 @@ public class MainActivity extends AppCompatActivity implements UserFragment.OnUs
 
     @Override
     public void replaceAcceptFragment() {
-//        userFragment = new UserFragment();
         Bundle args = new Bundle();
         args.putBoolean("clean", true);
         userFragment.setArguments(args);
@@ -108,7 +106,6 @@ public class MainActivity extends AppCompatActivity implements UserFragment.OnUs
 
     @Override
     public void replaceRejectFragment() {
-//        userFragment = new UserFragment();
         supportFragmentManager.beginTransaction()
                 .replace(R.id.fragment_container, userFragment).commit();
     }
