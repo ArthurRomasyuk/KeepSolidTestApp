@@ -4,4 +4,5 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="marginTop">20dp</dimen>
     <dimen name="marginTopText">32dp</dimen>
+    <dimen name="text_margin">16dp</dimen>
 </resources>

@@ -1,17 +1,18 @@
 package com.example.arutr.keepsolidapp;
 
 import android.content.Intent;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import com.example.arutr.keepsolidapp.fragment.AcceptFragment;
 import com.example.arutr.keepsolidapp.fragment.EmailInputFragment;
 import com.example.arutr.keepsolidapp.fragment.RejectFragment;
+import com.example.arutr.keepsolidapp.fragment.UserFragment;
+import com.example.arutr.keepsolidapp.models.User;
 
-public class MainActivity extends AppCompatActivity implements EmailInputFragment.OnClickSendButtonListener, AcceptFragment.OnClickOkButtonListener, RejectFragment.OnClickOkButtonListener {
+public class MainActivity extends AppCompatActivity implements UserFragment.OnUserListFragmentInteractionListener, AcceptFragment.OnClickOkButtonListener, RejectFragment.OnClickOkButtonListener {
 
-    private EmailInputFragment emailInputFragment;
+    private UserFragment userFragment;
     private AcceptFragment acceptFragment;
     private RejectFragment rejectFragment;
     private FragmentManager supportFragmentManager;
@@ -25,26 +26,32 @@ public class MainActivity extends AppCompatActivity implements EmailInputFragmen
             if (savedInstanceState != null) {
                 return;
             }
-            currentFragmentEnum = CurrentFragmentEnum.EmailInputFragment;
-            emailInputFragment = new EmailInputFragment();
-            acceptFragment = new AcceptFragment();
-            rejectFragment = new RejectFragment();
+            currentFragmentEnum = CurrentFragmentEnum.UserFragment;
+            userFragment = new UserFragment();
             supportFragmentManager = getSupportFragmentManager();
             supportFragmentManager.beginTransaction()
-                    .add(R.id.fragment_container, emailInputFragment).commit();
+                    .add(R.id.fragment_container, userFragment).commit();
         }
 
     }
 
+
     private enum CurrentFragmentEnum {
-        EmailInputFragment,
+        UserFragment,
         AcceptFragment,
         RejectFragment
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (data.getBooleanExtra("reject", true)) {
+        boolean reject = false;
+        try {
+            reject = data.getBooleanExtra("reject", true);
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+            reject = true;
+        }
+        if (reject) {
             currentFragmentEnum = CurrentFragmentEnum.RejectFragment;
         } else {
             currentFragmentEnum = CurrentFragmentEnum.AcceptFragment;
@@ -54,40 +61,55 @@ public class MainActivity extends AppCompatActivity implements EmailInputFragmen
     @Override
     protected void onResume() {
         super.onResume();
+        if (currentFragmentEnum==null){
+            currentFragmentEnum = CurrentFragmentEnum.UserFragment;
+        }
+        supportFragmentManager = getSupportFragmentManager();
         switch (currentFragmentEnum) {
-            case EmailInputFragment:
+            case UserFragment:
                 break;
             case AcceptFragment:
+                acceptFragment = new AcceptFragment();
                 supportFragmentManager.beginTransaction()
                         .replace(R.id.fragment_container, acceptFragment).commit();
                 break;
             case RejectFragment:
+                rejectFragment = new RejectFragment();
                 supportFragmentManager.beginTransaction()
                         .replace(R.id.fragment_container, rejectFragment).commit();
                 break;
         }
     }
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        userFragment = new UserFragment();
+        supportFragmentManager = getSupportFragmentManager();
+    }
 
     @Override
-    public void openEmailActivity(String email) {
-        Intent emailIntent = new Intent(this, EmailActivity.class);
-        emailIntent.putExtra("email", email);
-        startActivityForResult(emailIntent, 1);
+    public void onListFragmentInteraction(User user) {
+        Intent userIntent = new Intent(this, EmailActivity.class);
+        userIntent.putExtra("user", user);
+        userIntent.putExtra("categoryDescription", user.getCategory().getDescription());
+        startActivityForResult(userIntent, 1);
     }
 
     @Override
     public void replaceAcceptFragment() {
+//        userFragment = new UserFragment();
         Bundle args = new Bundle();
         args.putBoolean("clean", true);
-        emailInputFragment.setArguments(args);
+        userFragment.setArguments(args);
         supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, emailInputFragment).commit();
+                .replace(R.id.fragment_container, userFragment).commit();
     }
 
     @Override
     public void replaceRejectFragment() {
+//        userFragment = new UserFragment();
         supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, emailInputFragment).commit();
+                .replace(R.id.fragment_container, userFragment).commit();
     }
 }

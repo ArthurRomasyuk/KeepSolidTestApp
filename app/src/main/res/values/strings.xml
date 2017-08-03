@@ -2,17 +2,16 @@
     <string name="app_name">KeepSolidApp</string>
     <string name="clean_button">Очистить</string>
     <string name="send_button">Отправить</string>
-    <string name="accept_button">Подтвердить</string>
+    <string name="accept_button">Отправить</string>
     <string name="reject_button">Отклонить</string>
     <string name="hint_etEmail">Введите email адррес</string>
     <string name="error_message"></string>
     <string name="check_box_name">Разрешить</string>
     <string name="field_is_empy">Поле email не может быть пустым</string>
     <string name="wrong_email">Введите правильный email</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="accep_text">Пользователь подтвердил адрес</string>
     <string name="reject_text">Пользователь отклонил адрес</string>
     <string name="ok">OK</string>
+    <string name="category">"Категория: "</string>
+    <string name="email">"Email: "</string>
 </resources>
